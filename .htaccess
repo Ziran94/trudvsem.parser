@@ -1,0 +1,25 @@
+<IfModule mod_rewrite.c >
+    Options +FollowSymlinks
+    RewriteEngine on
+</IfModule>
+
+<IfModule mod_rewrite.c >
+
+    RewriteCond %{REQUEST_URI} ^(/backend)
+
+    RewriteRule ^backend/assets/(.*)$ backend/web/assets/$1 [L]
+    RewriteRule ^backend/css/(.*)$ backend/web/css/$1 [L]
+    RewriteRule ^backend/js/(.*)$ backend/web/js/$1 [L]
+    RewriteRule ^backend/images/(.*)$ backend/web/images/$1 [L]
+    RewriteRule ^backend/(.*)$ backend/web/$1 [L]
+
+
+    RewriteCond %{REQUEST_URI} ^(/)
+
+    RewriteRule ^assets/(.*)$ frontend/web/assets/$1 [L]
+    RewriteRule ^css/(.*)$ frontend/web/css/$1 [L]
+    RewriteRule ^js/(.*)$ frontend/web/js/$1 [L]
+    RewriteRule ^images/(.*)$ frontend/web/images/$1 [L]
+    RewriteRule ^(.*)$ frontend/web/$1 [L]
+
+</IfModule>
