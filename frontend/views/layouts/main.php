@@ -36,8 +36,8 @@ AppAsset::register($this);
                     <?php
                     $menuItems = [
                         ['label' => 'Контакты', 'url' => ['/site/index']],
-                        ['label' => 'Архив', 'url' => ['/site/about']],
-                        ['label' => 'Настройки', 'url' => ['/site/contact']],
+                        ['label' => 'Архив', 'url' => ['/site/archive']],
+                        ['label' => 'Настройки', 'url' => ['/site/settings']],
                     ];
                     echo Nav::widget([
                         'options' => ['class' => 'navbar-nav me-auto mb-2 mb-md-0'],
