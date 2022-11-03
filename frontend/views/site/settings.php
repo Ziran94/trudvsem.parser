@@ -1,15 +1,15 @@
 <?php
-use app\models\Regions;
+
 use yii\helpers\Html;
-use yii\helpers\Url;
-use yii\grid\ActionColumn;
 use yii\grid\GridView;
+use \yii\widgets\ActiveForm;
+use nex\datepicker\DatePicker;
 
 $this->title = 'Настройки';
 ?>
 <div class="settings-index">
     <h1><?= Html::encode($this->title) ?></h1>
-
+    <div class="conteiner-fluid d-flex">
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
@@ -44,4 +44,39 @@ $this->title = 'Настройки';
 //            'prevPageLabel' => '<i class="ionicons ion-arrow-left-c">123</i>', // стрелочка влево
         ],
     ]); ?>
+
+
+        <?php
+        $form = ActiveForm::begin();
+
+        foreach ($settings as $index => $setting) {
+//            if($index == 0)
+            echo $form->field($setting, "[$index]value")->label($setting->name);
+//            else
+//                echo $form->field($setting, "[$index]value")->widget(DatePicker::class, [
+//                    'language' => 'ru',
+//                    //'dateFormat' => 'dd.MM.yyyy,
+//                    'options' => [
+////                        'placeholder' => Yii::$app->formatter->asDate($model->created_at),
+//                        'class'=> 'form-control',
+//                        'autocomplete'=>'off'
+//                    ],
+//                    'clientOptions' => [
+//                        'changeMonth' => true,
+//                        'changeYear' => true,
+//                        'yearRange' => '2015:2050',
+//                        //'showOn' => 'button',
+//                        //'buttonText' => 'Выбрать дату',
+//                        //'buttonImageOnly' => true,
+//                        //'buttonImage' => 'images/calendar.gif'
+//                    ]])->label(false);
+        }
+        ?>
+        <div class="form-group">
+            <?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
+        </div>
+        <?php
+        ActiveForm::end();
+        ?>
+    </div>
 </div>

@@ -46,10 +46,10 @@ class Regions extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'code' => 'Code',
-            'name' => 'Name',
+            'code' => 'Код',
+            'name' => 'Регион',
             'postIndex' => 'Post Index',
-            'status' => 'Status',
+            'status' => '',
         ];
     }
 
