@@ -4,8 +4,10 @@ namespace frontend\controllers;
 
 use app\models\Regions;
 use app\models\RegionsSearch;
+use app\models\Settings;
 use Yii;
 
+use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 
@@ -47,9 +49,18 @@ class SiteController extends Controller
         $dataProvider->sort = ['defaultOrder' => ['status' => SORT_DESC]];
 
 
+        $settings = Settings::find()->all();
+
+        if (Model::loadMultiple($settings, Yii::$app->request->post()) && Model::validateMultiple($settings)) {
+            foreach ($settings as $setting) {
+                $setting->save(false);
+            }
+        }
+
         return $this->render('settings', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+            'searchModel'   => $searchModel,
+            'dataProvider'  => $dataProvider,
+            'settings'      => $settings,
         ]);
     }
 
