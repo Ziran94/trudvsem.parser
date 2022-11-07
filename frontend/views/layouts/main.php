@@ -45,8 +45,8 @@ AppAsset::register($this);
                     ]);
                     ?>
                     <div class="d-flex flex-column">
-                        <button class="btn btn-outline-info mb-2">Добавить контакты</button>
-                        <button class="btn btn-success mb-2">Запустить парсер</button>
+                        <?=Html::a('Добавить резюме', ['/parser/get-resume'], ['class' => 'btn btn-outline-info mb-2'])?>
+                        <?=Html::a('Запустить парсер ('.\app\models\Contacts::find()->where(["status" => 0])->andWhere(["email" => null])->andWhere(["phone" => null])->count().')', ['/parser/start'], ['class' => 'btn btn-success mb-2'])?>
                     </div>
                 </div>
             </div>

@@ -51,7 +51,7 @@ $this->title = 'Настройки';
 
         foreach ($settings as $index => $setting) {
 //            if($index == 0)
-            echo $form->field($setting, "[$index]value")->label($setting->name);
+            echo $form->field($setting, "[$index]value")->textarea()->label($setting->name);
 //            else
 //                echo $form->field($setting, "[$index]value")->widget(DatePicker::class, [
 //                    'language' => 'ru',

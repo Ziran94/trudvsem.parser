@@ -30,7 +30,7 @@ class Settings extends \yii\db\ActiveRecord
     {
         return [
             [['name', 'value'], 'required'],
-            [['name', 'value'], 'string', 'max' => 255],
+            [['name'], 'string', 'max' => 255],
         ];
     }
 
@@ -41,9 +41,15 @@ class Settings extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Регион',
+            'name' => 'Ключ',
             'value' => 'Значение',
         ];
+    }
+
+    public static function all()
+    {
+        $settings = self::find()->asArray()->all();
+        return (object)array_combine(array_column($settings, "key"),array_column($settings, "value"));
     }
 
 

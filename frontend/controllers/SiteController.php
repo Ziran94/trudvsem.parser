@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use app\models\ContactsSearch;
 use app\models\Regions;
 use app\models\RegionsSearch;
 use app\models\Settings;
@@ -34,12 +35,26 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
-        return $this->render('index');
+        $searchModel = new ContactsSearch();
+        $dataProvider = $searchModel->search($this->request->queryParams);
+        $dataProvider->query->where(['AND',["status"=>"0"],['OR',["!=", "email", "NULL"],["!=", "phone", "NULL"]]]);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
     }
 
     public function actionArchive()
     {
-        return $this->render('index');
+        $searchModel = new ContactsSearch();
+        $dataProvider = $searchModel->search($this->request->queryParams);
+        $dataProvider->query->where(["status"=>"1"]);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
     }
 
     public function actionSettings()

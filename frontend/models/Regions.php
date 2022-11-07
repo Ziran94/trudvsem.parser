@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use function Codeception\Lib\retrieveBaseUrl;
 
 /**
  * This is the model class for table "regions".
@@ -63,6 +64,12 @@ class Regions extends \yii\db\ActiveRecord
         return $this->hasMany(Contacts::class, ['idRegion' => 'id']);
     }
 
+    public static function getCodes()
+    {
+        $codes = self::find()->where(["status" => 1])->asArray()->all();
+        return array_column($codes, "code");
+    }
+
     public function toggleStatus()
     {
         if ($this->status == 0)
@@ -71,5 +78,9 @@ class Regions extends \yii\db\ActiveRecord
             $this->status = 0;
         }
         $this->save();
+    }
+
+    public static function getId($code){
+        return self::find()->where(["code" => $code])->select("id")->asArray()->one()["id"];
     }
 }
