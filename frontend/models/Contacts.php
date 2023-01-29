@@ -3,6 +3,8 @@
 namespace app\models;
 
 use Yii;
+use yii\base\ErrorException;
+use yii\base\ExitException;
 
 /**
  * This is the model class for table "contacts".
@@ -92,7 +94,7 @@ class Contacts extends \yii\db\ActiveRecord
         $this->age = (!empty($candidate->candidate->age)) ? $candidate->candidate->age : null;
         $this->salary = (!empty($candidate->cv->salary)) ? $candidate->cv->salary : null;
         $this->positionName = (!empty($candidate->cv->positionName)) ? $candidate->cv->positionName : null;
-        $this->idRegion = Regions::getId($candidate->candidate->regionCode);
+        $this->idRegion = (!empty($candidate->region->code)) ? Regions::getId($candidate->region->code) : null;
         $this->firstPublishedDate = (!empty($candidate->cv->firstPublishedDate)) ? $candidate->cv->firstPublishedDate : null;
         $this->publishedDate = (!empty($candidate->cv->publishedDate)) ? $candidate->cv->publishedDate : null;
         $this->genderType = (!empty($candidate->candidate->genderType->key)) ? $candidate->candidate->genderType->key : null;
@@ -110,6 +112,27 @@ class Contacts extends \yii\db\ActiveRecord
         }
 
         return $resume_ids;
+
+    }
+
+    public static function getResume(){
+        return self::find()->where(["status" => 0])->andWhere(["email" => null])->andWhere(["phone" => null]);
+    }
+
+    public static function setContacts($model, $contacts){
+
+        foreach ($contacts as $contact){
+            switch ($contact->contactType->key) {
+                case "EMAIL":
+                    $model->email = $contact->value;
+                    break;
+                case "PHONE":
+                    $model->phone = $contact->value;
+                    break;
+            }
+        }
+
+        $model->save();
 
     }
 

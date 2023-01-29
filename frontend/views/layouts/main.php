@@ -10,6 +10,8 @@ use yii\bootstrap5\Html;
 use yii\bootstrap5\Nav;
 use yii\bootstrap5\NavBar;
 
+use app\models\Contacts;
+
 AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
@@ -46,7 +48,7 @@ AppAsset::register($this);
                     ?>
                     <div class="d-flex flex-column">
                         <?=Html::a('Добавить резюме', ['/parser/get-resume'], ['class' => 'btn btn-outline-info mb-2'])?>
-                        <?=Html::a('Запустить парсер ('.\app\models\Contacts::find()->where(["status" => 0])->andWhere(["email" => null])->andWhere(["phone" => null])->count().')', ['/parser/start'], ['class' => 'btn btn-success mb-2'])?>
+                        <?=Html::a('Запустить парсер ('.Contacts::getResume()->count().')', ['/parser/start'], ['class' => 'btn btn-success mb-2'])?>
                     </div>
                 </div>
             </div>

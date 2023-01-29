@@ -7,9 +7,16 @@ use nex\datepicker\DatePicker;
 
 $this->title = 'Настройки';
 ?>
-<div class="settings-index">
+<div class="settings-index" style="width: 100%">
     <h1><?= Html::encode($this->title) ?></h1>
+    <?php if( Yii::$app->session->hasFlash('unauthorized') ): ?>
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            <?php echo Yii::$app->session->getFlash('unauthorized'); ?>
+        </div>
+    <?php endif;?>
     <div class="conteiner-fluid d-flex">
+
+
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 

@@ -26,9 +26,10 @@ class ParserController extends Controller
         $settings = Settings::all();
         $regions = Regions::getCodes();
         $trudvsem = new TrudVsem($settings, $regions);
+        $resumeAll = $trudvsem->getResume();
 
 
-        foreach ($trudvsem->getResume() as $resume) {
+        foreach ($resumeAll as $resume) {
 
             if (in_array($resume[0], Contacts::getIds())){
                 continue;
@@ -49,6 +50,21 @@ class ParserController extends Controller
 
     public function actionStart()
     {
+        $settings = Settings::all();
+        $regions = Regions::getCodes();
+        $trudvsem = new TrudVsem($settings, $regions);
+
+        foreach (Contacts::getResume()->all() as $resume){
+            $contacts = $trudvsem->getContact($resume->id, $resume->idResume);
+
+            if ($contacts->code == "UNAUTHORIZED") {
+                Yii::$app->session->setFlash('unauthorized', "Не авторизован, требуется поменять куки в настроках");
+                return $this->redirect('/settings');
+            }
+
+            Contacts::setContacts($resume, $contacts->data->contacts);
+            sleep(rand(120, 240));
+        }
         return $this->redirect('/settings');
     }
 
